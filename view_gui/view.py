@@ -33,10 +33,6 @@ class GuiGol(QMainWindow):
         self.gui.actionRules.triggered.connect(self._rulesDialog.exec_)
         self.gui.actionQuit.triggered.connect(QApplication.exit)
 
-        # set central board GoL
-        # Add the custom widget to the central QFrame to display the current state of the GOL grid
-        self.board = boardGoL(model)
-        self.gui.boardLayout.addWidget(self.board, 0, 0)
 
         # Create action for load and save       # not implemented yet
         """ da capire come chiamare finestra esterna per salvare o caricare"""
@@ -44,13 +40,18 @@ class GuiGol(QMainWindow):
         # self.gui.actionSave.triggered.connect()
 
         # set windows non resizable
-        self.setFixedSize(800, 600)
+        self.setFixedSize(618, 750)
 
         # Set the GUI to observe the Game of Life Model
         self._model = model
         self._model.observe(self.updateView)
         self.updateView()
 
+
+        # set central board GoL
+        # Add the custom widget to the central QFrame to display the current state of the GOL grid
+        self.board = boardGoL(model)
+        self.gui.boardLayout.addWidget(self.board, 0, 0)
 
     def updateView(self):
         """

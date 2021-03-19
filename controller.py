@@ -55,12 +55,13 @@ class ControllerGol:
 
         cell_h, cell_w = maxHeight/grid.shape[1], maxWidth/grid.shape[0]
 
-        row, col = floor(x/cell_w), floor(y/cell_h)
+        col, row = floor(x/cell_w), floor(y/cell_h)
+
 
         if grid[row, col] == 0:
-            grid[row, col] = 1
-        elif grid[row, col] == 1:
-            grid[row, col] = 0
+            grid[row, col] = 255 # white color
+        elif grid[row, col] == 255:
+            grid[row, col] = 0 # black color
 
         print(grid)
         self._model.setGrid(grid)

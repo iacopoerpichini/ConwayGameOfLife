@@ -23,7 +23,7 @@ class ModelGol(Observable):
         # parameters
         self._speed = 1
         self._runnig = False
-        self._grid = np.zeros((10,20), dtype=np.uint8)
+        self._grid = np.zeros((30,30), dtype=np.uint8)
 
     def getSpeed(self):
         return self._speed

@@ -6,21 +6,16 @@ from model import ModelGol
 
 
 class boardGoL(QLabel):
+
     # Signal definition
     changeStateSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, model: ModelGol):
         QtWidgets.QGraphicsScene.__init__(self)
-
-        self.setAlignment(Qt.AlignCenter)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.setMinimumSize(1, 1)  # To allow the QLabel to shrink also with a pixmap attached
-
         # Connect to the model and show the initial grid
         self._model = model
         self._model.observe(self.updateGrid)
         self.updateGrid()
-
 
     def updateGrid(self):
         """"
@@ -35,6 +30,8 @@ class boardGoL(QLabel):
         bytes = width
         image = QImage(grid, width, height, bytes, QImage.Format_Indexed8)
         qpixmap = QPixmap.fromImage(image)
+        # Scale the created QPixmap to fit the widget
+        self.setPixmap(qpixmap.scaled(self.width(), self.height(), Qt.KeepAspectRatio))
 
 
     def mousePressEvent(self, event):
@@ -52,4 +49,24 @@ class boardGoL(QLabel):
             print('Mouse press event exception')
             pass
 
+    def mouseMoveEvent(self, event):
+        """
+        Left click pressed for draw cell
+        """
+        try:
+            ep = event.pos()
+            if event.buttons() == QtCore.Qt.LeftButton:
+                self.changeStateSignal.emit([ep.x(), ep.y()])
+        except Exception:
+            print('Mouse move event exception')
+            pass
 
+    def resizeEvent(self, event):
+        """
+        Set the inital grid for fit the dimension of the widget
+        """
+        try:
+            self.updateGrid()
+        except Exception:
+            print('Failed initial resize')
+            pass
