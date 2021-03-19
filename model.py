@@ -1,6 +1,8 @@
 import numpy as np
 from PyQt5.QtCore import QObject, pyqtSignal
 
+GRIDSIZE = 30
+
 # observable class see at lesson for observe value changed in model
 class Observable(QObject):
     value_changed = pyqtSignal(object)
@@ -21,9 +23,10 @@ class ModelGol(Observable):
     def __init__(self):
         super().__init__()
         # parameters
-        self._speed = 1
+        self._speed = 15 # default 15 fps 1 min 30 max
         self._runnig = False
-        self._grid = np.zeros((30,30), dtype=np.uint8)
+        self._gridSize = GRIDSIZE
+        self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
 
     def getSpeed(self):
         return self._speed
@@ -45,5 +48,8 @@ class ModelGol(Observable):
     def setGrid(self, grid):
         self._grid = grid
         self.notify()
+
+    def clearGrid(self):
+        self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
 
 

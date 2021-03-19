@@ -21,14 +21,12 @@ class boardGoL(QLabel):
         """"
         Show the image relative to the board
         """
-        print('siamo in update grid')
         # take the grid from model and transorm it into a image
         grid = self._model.getGrid()
 
         width = grid.shape[0]
         height = grid.shape[1]
-        bytes = width
-        image = QImage(grid, width, height, bytes, QImage.Format_Indexed8)
+        image = QImage(grid, width, height, width, QImage.Format_Indexed8)
         qpixmap = QPixmap.fromImage(image)
         # Scale the created QPixmap to fit the widget
         self.setPixmap(qpixmap.scaled(self.width(), self.height(), Qt.KeepAspectRatio))

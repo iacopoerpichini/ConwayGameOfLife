@@ -1,8 +1,8 @@
 from math import floor
 
+import numpy as np
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtCore
-
 from model import ModelGol
 from view_gui.view import GuiGol
 
@@ -20,18 +20,80 @@ class ControllerGol:
         self._view = view
 
         # connect to the controller all the elements on the view
-        view.buttonPlay(self.play)
-
+        self._view.buttonPlay(self.play)
+        self._view.buttonSingleStep(self.step)
+        self._view.buttonReset(self.reset)
+        self._view.sliderSpeed(self.setSliderSpeed)
         self._view.board.changeStateSignal.connect(self.changeGrid)
+
 
     def play(self):
         """
         Start or stop game of life
         """
+        speed = self._model.getSpeed()
+        self._model.setRunning(not self._model.isRunning())
         if self._model.isRunning():
-            self._model.setRunning(foo=False)
-        else:
-            self._model.setRunning(foo=True)
+            timer = QtCore.QTimer()
+            timer.setInterval(1/speed)
+            timer.timeout.connect(self.step)
+
+
+    def step(self):
+        """
+        Compute a game of life iteration and generate a new frame
+        """
+        grid = self._model.getGrid()
+        newGrid = np.zeros(grid.shape, dtype=np.uint8)
+        for i in range(grid.shape[0]):
+            for j in range(grid.shape[1]):
+                if self._neighbors(i, j) == 3:
+                    newGrid[i, j] = 255 # born a new cell
+                elif self._neighbors(i, j) >= 4 or self._neighbors(i, j) <= 1:
+                    newGrid[i, j] = 0 # die for over/under population
+                elif self._neighbors(i, j) == 2:
+                    newGrid[i, j] = grid[i, j]
+        self._model.setGrid(newGrid)
+
+    def _neighbors(self, i, j):
+        """
+        Return the number of neighbors of a node i, j
+        :return: # neighbours
+        """
+        grid = self._model.getGrid()
+        indexes = []
+        indexes.append([i - 1, j - 1])
+        indexes.append([i, j - 1])
+        indexes.append([i + 1, j - 1])
+        indexes.append([i - 1, j])
+        indexes.append([i + 1, j])
+        indexes.append([i - 1, j + 1])
+        indexes.append([i, j + 1])
+        indexes.append([i + 1, j + 1])
+        indexes = self._checkIndexes(indexes, grid.shape[0], grid.shape[1])
+        newValue = 0
+        for index in indexes:
+            newValue += grid[index[0], index[1]]
+        return floor(newValue / 255)
+
+    def _checkIndexes(self, indexes, maxRows, maxCols):
+        """
+        use for control the paddings cell
+        """
+        goodIndexes = []
+        for index in indexes:
+            if index[0] >= 0 and index[1] >= 0 and index [0] < maxRows and index[1] < maxCols:
+                goodIndexes.append(index)
+        return goodIndexes
+
+    def reset(self):
+        """
+        Clear the grid in the model and update the view
+        """
+        self._model.clearGrid()
+        # print(self._model.getGrid()) ok
+        self._view.board.updateGrid()
+
 
     def setSliderSpeed(self, speed):
         """
@@ -45,26 +107,24 @@ class ControllerGol:
         """
         grid = self._model.getGrid()
         x, y = coord[0], coord[1]
-
         # remove the padding of external widget
         # maxWidth = self._view.gui.graphicsView.frameGeometry().width() - self._view.gui.graphicsView.x()
         # maxHeight = self._view.gui.graphicsView.frameGeometry().height() - self._view.gui.graphicsView.y()
-
         maxWidth = self._view.board.width()
         maxHeight = self._view.board.height()
 
-        cell_h, cell_w = maxHeight/grid.shape[1], maxWidth/grid.shape[0]
+        if x <= maxWidth and y <= maxHeight:
+            numberCellH, numberCellW = maxHeight/grid.shape[1], maxWidth/grid.shape[0]
+            # change the index of row and col for display the right figure
+            col, row = floor(x/numberCellW), floor(y/numberCellH)
+            if col >= 0 and row >= 0:
+                if grid[row, col] == 0:
+                    grid[row, col] = 255 # white color
+                elif grid[row, col] == 255:
+                    grid[row, col] = 0 # black color
+                # print(grid)
+                self._model.setGrid(grid)
 
-        col, row = floor(x/cell_w), floor(y/cell_h)
-
-
-        if grid[row, col] == 0:
-            grid[row, col] = 255 # white color
-        elif grid[row, col] == 255:
-            grid[row, col] = 0 # black color
-
-        print(grid)
-        self._model.setGrid(grid)
 
 
 

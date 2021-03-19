@@ -33,7 +33,6 @@ class GuiGol(QMainWindow):
         self.gui.actionRules.triggered.connect(self._rulesDialog.exec_)
         self.gui.actionQuit.triggered.connect(QApplication.exit)
 
-
         # Create action for load and save       # not implemented yet
         """ da capire come chiamare finestra esterna per salvare o caricare"""
         # self.gui.actionLoad.triggered.connect()
@@ -41,12 +40,12 @@ class GuiGol(QMainWindow):
 
         # set windows non resizable
         self.setFixedSize(618, 750)
+        """ usare yarn per settare tutte le costanti dopo """
 
         # Set the GUI to observe the Game of Life Model
         self._model = model
         self._model.observe(self.updateView)
         self.updateView()
-
 
         # set central board GoL
         # Add the custom widget to the central QFrame to display the current state of the GOL grid
@@ -57,7 +56,7 @@ class GuiGol(QMainWindow):
         """
         Update the play/pause button and the speed label if the simulation is running
         """
-        self.gui.speedLabel.setText(f"Speed: {self._model.getSpeed()}")
+        self.gui.speedLabel.setText(f"Speed: {self._model.getSpeed()} (fps)")
         if self._model.isRunning():
             self.gui.play.setText("Pause")
         else:
@@ -73,5 +72,5 @@ class GuiGol(QMainWindow):
         self.gui.singleStep.clicked.connect(slot)
 
     def sliderSpeed(self, slot):
-        self.gui.speedSlider.clicked.connect(slot)
+        self.gui.sliderSpeed.valueChanged.connect(slot)
 
