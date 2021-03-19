@@ -41,8 +41,6 @@ class ControllerGol:
         else:
             self._timer.stop()
 
-
-
     def step(self):
         """
         Compute a game of life iteration and generate a new frame
@@ -93,8 +91,13 @@ class ControllerGol:
     def reset(self):
         """
         Clear the grid in the model and update the view
+        if the simulation is running stop the simulation
         """
         self._model.clearGrid()
+        if self._model.isRunning():
+            self._model.setRunning(False)
+            self._timer.stop()
+
         # print(self._model.getGrid()) ok
         self._view.board.updateGrid()
 

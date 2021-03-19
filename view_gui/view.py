@@ -60,9 +60,11 @@ class GuiGol(QMainWindow):
         if self._model.isRunning():
             self.gui.play.setText("Pause")
             self.gui.sliderSpeed.setDisabled(True)
+            self.gui.singleStep.setDisabled(True)
         else:
             self.gui.play.setText("Play")
             self.gui.sliderSpeed.setDisabled(False)
+            self.gui.singleStep.setDisabled(False)
 
     def buttonPlay(self, slot):
         self.gui.play.clicked.connect(slot)

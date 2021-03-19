@@ -1,7 +1,7 @@
 import numpy as np
 from PyQt5.QtCore import QObject, pyqtSignal
 
-GRIDSIZE = 30
+GRIDSIZE = 50
 
 # observable class see at lesson for observe value changed in model
 class Observable(QObject):
