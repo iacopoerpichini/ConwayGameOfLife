@@ -59,8 +59,10 @@ class GuiGol(QMainWindow):
         self.gui.speedLabel.setText(f"Speed: {self._model.getSpeed()} (fps)")
         if self._model.isRunning():
             self.gui.play.setText("Pause")
+            self.gui.sliderSpeed.setDisabled(True)
         else:
             self.gui.play.setText("Play")
+            self.gui.sliderSpeed.setDisabled(False)
 
     def buttonPlay(self, slot):
         self.gui.play.clicked.connect(slot)

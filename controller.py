@@ -7,7 +7,6 @@ from model import ModelGol
 from view_gui.view import GuiGol
 
 
-
 class ControllerGol:
 
     # Signal definition
@@ -26,17 +25,22 @@ class ControllerGol:
         self._view.sliderSpeed(self.setSliderSpeed)
         self._view.board.changeStateSignal.connect(self.changeGrid)
 
+        # timer for play pause action
+        self._timer = QtCore.QTimer()
+
 
     def play(self):
         """
         Start or stop game of life
         """
-        speed = self._model.getSpeed()
         self._model.setRunning(not self._model.isRunning())
         if self._model.isRunning():
-            timer = QtCore.QTimer()
-            timer.setInterval(1/speed)
-            timer.timeout.connect(self.step)
+            self._timer.setInterval(1 / self._model.getSpeed() * 1000)
+            self._timer.start()
+            self._timer.timeout.connect(self.step)
+        else:
+            self._timer.stop()
+
 
 
     def step(self):
