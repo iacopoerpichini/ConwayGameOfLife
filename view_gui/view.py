@@ -22,8 +22,7 @@ class AboutDialog(QDialog):
         # Set up the user interface from Designer.
         self.guiAbout = Ui_About()
         self.guiAbout.setupUi(self)
-
-        # image = QtGui.QImage("../img2/mvc.png")
+        # image = QtGui.QImage("../img/mvc.png")
         # qpixmap = QtGui.QPixmap.fromImage(image)
         # print(image)
         # self.guiAbout.img2.setPixmap(qpixmap)
@@ -47,9 +46,8 @@ class GuiGol(QMainWindow):
         # self.gui.actionLoad.triggered.connect()
         # self.gui.actionSave.triggered.connect()
 
-        # set windows non resizable
+        # set windows non resizable avoid graphics bug on resize
         self.setFixedSize(618, 750)
-        """ usare yarn per settare tutte le costanti dopo """
 
         # Set the GUI to observe the Game of Life Model
         self._model = model
@@ -76,13 +74,25 @@ class GuiGol(QMainWindow):
             self.gui.singleStep.setDisabled(False)
 
     def buttonPlay(self, slot):
+        """
+        slot of button play
+        """
         self.gui.play.clicked.connect(slot)
 
     def buttonReset(self, slot):
+        """
+        slot of button reset
+        """
         self.gui.reset.clicked.connect(slot)
 
     def buttonSingleStep(self, slot):
+        """
+        slot of button single step
+        """
         self.gui.singleStep.clicked.connect(slot)
 
     def sliderSpeed(self, slot):
+        """
+        slot of slider speed
+        """
         self.gui.sliderSpeed.valueChanged.connect(slot)
