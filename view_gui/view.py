@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import QMainWindow, QDialog, QApplication
-from PyQt5 import QtGui
+import os
+
+import numpy as np
+from PyQt5.QtWidgets import QMainWindow, QDialog, QApplication, QFileDialog
 
 from BoardGoL import BoardGoL
 from model import ModelGol
@@ -7,6 +9,7 @@ from view_gui.about import Ui_About
 from view_gui.rules import Ui_Rules
 from view_gui.gui import Ui_GameOfLife
 
+PATTERN_FOLDER = os.path.join(os.path.dirname(os.path.abspath('__file__')), 'pattern')
 
 class RulesDialog(QDialog):
     def __init__(self, **kwargs):
@@ -43,8 +46,8 @@ class GuiGol(QMainWindow):
 
         # Create action for load and save       # not implemented yet
         """ da capire come chiamare finestra esterna per salvare o caricare"""
-        # self.gui.actionLoad.triggered.connect()
-        # self.gui.actionSave.triggered.connect()
+        self.gui.actionLoad.triggered.connect(self._load)
+        self.gui.actionSave.triggered.connect(self._save)
 
         # set windows non resizable avoid graphics bug on resize
         self.setFixedSize(618, 750)
@@ -58,6 +61,40 @@ class GuiGol(QMainWindow):
         # Add the custom widget to the central QFrame to display the current state of the GOL grid
         self.board = BoardGoL(model)
         self.gui.boardLayout.addWidget(self.board, 0, 0)
+
+    def _load(self):
+        """
+        Action connected to load menu item
+        load a numpy array with load txt from numpy
+        """
+        print('load')
+        self._model.clearGrid()
+        try:
+            widgetLoad = QFileDialog.Options()
+            widgetLoad |= QFileDialog.DontUseNativeDialog
+            path = QFileDialog.getOpenFileName(caption="Load pattern", directory=PATTERN_FOLDER, options=widgetLoad)
+            if path[0] !='':
+                grid = np.loadtxt(path[0], dtype=np.uint8)
+                self._model.setGrid(grid)
+        except Exception:
+            print('Exception load')
+
+    def _save(self):
+        """
+        Action connected for saving a board
+        save a file txt from numpy array with save txt from numpy
+        """
+        print('save')
+        grid = self._model.getGrid()
+        try:
+            widgetSave = QFileDialog.Options()
+            widgetSave |= QFileDialog.DontUseNativeDialog
+            path = QFileDialog.getSaveFileName(caption="Choose name for save", directory=PATTERN_FOLDER, options=widgetSave)
+            if path[0] != '':
+                np.savetxt(path[0] + '.txt', grid)
+        except Exception:
+            print('Exception save')
+
 
     def _updateView(self):
         """

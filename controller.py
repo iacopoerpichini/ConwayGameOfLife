@@ -27,7 +27,7 @@ class ControllerGol:
 
         # timer for play pause action
         self._timer = QtCore.QTimer()
-
+        self._timer.timeout.connect(self.step)
 
     def play(self):
         """
@@ -35,9 +35,9 @@ class ControllerGol:
         """
         self._model.setRunning(not self._model.isRunning())
         if self._model.isRunning():
-            self._timer.setInterval(1 / self._model.getSpeed() * 1000)
+            msec = 1 / self._model.getSpeed() * 1000
+            self._timer.setInterval(msec)
             self._timer.start()
-            self._timer.timeout.connect(self.step)
         else:
             self._timer.stop()
 
