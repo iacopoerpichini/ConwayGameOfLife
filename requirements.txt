@@ -1,3 +1,4 @@
 python==3.6
 pyqt==5.9.2
-numpy==1.19.5
+numpy~=1.19.2
+pyqt5~=5.15.2

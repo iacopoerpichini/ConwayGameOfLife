@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import QMainWindow, QDialog, QApplication
 
-from boardGoL import boardGoL
+from BoardGoL import BoardGoL
 from model import ModelGol
 from view_gui.about import Ui_About
 from view_gui.rules import Ui_Rules
 from view_gui.gui import Ui_GameOfLife
+
 
 class RulesDialog(QDialog):
     def __init__(self, **kwargs):
@@ -13,12 +14,14 @@ class RulesDialog(QDialog):
         self.guiRules = Ui_Rules()
         self.guiRules.setupUi(self)
 
+
 class AboutDialog(QDialog):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Set up the user interface from Designer.
         self.guiAbout = Ui_About()
         self.guiAbout.setupUi(self)
+
 
 class GuiGol(QMainWindow):
     def __init__(self, model: ModelGol):
@@ -44,15 +47,15 @@ class GuiGol(QMainWindow):
 
         # Set the GUI to observe the Game of Life Model
         self._model = model
-        self._model.observe(self.updateView)
-        self.updateView()
+        self._model.observe(self._updateView)
+        self._updateView()
 
         # set central board GoL
         # Add the custom widget to the central QFrame to display the current state of the GOL grid
-        self.board = boardGoL(model)
+        self.board = BoardGoL(model)
         self.gui.boardLayout.addWidget(self.board, 0, 0)
 
-    def updateView(self):
+    def _updateView(self):
         """
         Update the play/pause button and the speed label if the simulation is running
         """
@@ -77,4 +80,3 @@ class GuiGol(QMainWindow):
 
     def sliderSpeed(self, slot):
         self.gui.sliderSpeed.valueChanged.connect(slot)
-

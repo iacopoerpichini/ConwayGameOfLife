@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 from model import ModelGol
 
 
-class boardGoL(QLabel):
+class BoardGoL(QLabel):
 
     # Signal definition
     changeStateSignal = QtCore.pyqtSignal(object)
@@ -30,7 +30,6 @@ class boardGoL(QLabel):
         qpixmap = QPixmap.fromImage(image)
         # Scale the created QPixmap to fit the widget
         self.setPixmap(qpixmap.scaled(self.width(), self.height(), Qt.KeepAspectRatio))
-
 
     def mousePressEvent(self, event):
         """

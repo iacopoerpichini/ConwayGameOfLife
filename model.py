@@ -1,6 +1,7 @@
 import numpy as np
 from PyQt5.QtCore import QObject, pyqtSignal
 
+# only initial param for dimension of the GoL board can be modified with methods in the model
 GRIDSIZE = 50
 
 # observable class see at lesson for observe value changed in model
@@ -18,7 +19,9 @@ class Observable(QObject):
 
 class ModelGol(Observable):
     """
-    Model class for game of life define param for the backend
+    Model class for game of life
+    Represent the raw data for the evolution bord of GoL, the flag relative to the run action of the program and the
+    state of speed slider
     """
     def __init__(self):
         super().__init__()
@@ -51,5 +54,12 @@ class ModelGol(Observable):
 
     def clearGrid(self):
         self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
+
+    def getGridSize(self):
+        return self._gridSize
+
+    def setGridSize(self, size):
+        self._gridSize = size
+        self.notify()
 
 

@@ -1,17 +1,8 @@
 import sys
-
 from PyQt5.QtWidgets import QApplication
-
 from controller import ControllerGol
 from model import ModelGol
 from view_gui.view import GuiGol
-
-
-# load initial configuration
-def config():
-    print('not implemented yet')
-    return True
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
