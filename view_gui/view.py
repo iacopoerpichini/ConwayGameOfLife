@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QDialog, QApplication
+from PyQt5 import QtGui
 
 from BoardGoL import BoardGoL
 from model import ModelGol
@@ -21,6 +22,11 @@ class AboutDialog(QDialog):
         # Set up the user interface from Designer.
         self.guiAbout = Ui_About()
         self.guiAbout.setupUi(self)
+
+        # image = QtGui.QImage("../img2/mvc.png")
+        # qpixmap = QtGui.QPixmap.fromImage(image)
+        # print(image)
+        # self.guiAbout.img2.setPixmap(qpixmap)
 
 
 class GuiGol(QMainWindow):

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>203</width>
-    <height>133</height>
+    <width>240</width>
+    <height>152</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,17 +19,45 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="font">
       <font>
        <italic>true</italic>
       </font>
      </property>
      <property name="text">
-      <string>Realized for HCI exam. 
-
- Realized with MVC Pattern. 
-
- Iacopo Erpichini </string>
+      <string>HCI exam.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="text">
+      <string>MVC Pattern implementation.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <italic>true</italic>
+       <underline>false</underline>
+      </font>
+     </property>
+     <property name="text">
+      <string>Iacopo Erpichini</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>

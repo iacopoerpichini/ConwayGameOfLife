@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>671</width>
-    <height>392</height>
+    <width>632</width>
+    <height>447</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,6 +30,19 @@
     </widget>
    </item>
    <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QLabel" name="label">
      <property name="text">
       <string>The simulation of starts from an initial state of populated locations and then progresses through time.
@@ -49,6 +62,32 @@ The evolution of the board state is governed by a few simple rules:
     </widget>
    </item>
    <item>
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QLabel" name="label_3">
      <property name="font">
       <font>
@@ -61,14 +100,57 @@ The evolution of the board state is governed by a few simple rules:
     </widget>
    </item>
    <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>For add a cel just click in a square of the central panel.
-
- Click button play for run the simulation.
-
-Is possible to stop the simulation and modifying the state of the board.
-is also possible to make a single step of the simulation and choose the speed.</string>
+      <string>For add a cell just click in a square of the central panel.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>It's possible to hold click on left button of mouse and drag for set to alive more cells. </string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Button Play start and stop the simulation, Single step do a single iteration of Game of Live evolution.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Reset button stop the simulation if it's running and clear all the board.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>When the simulation is not running is possible to set the speed of simulation with the Speed Slider.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Finally is possible to load/save board state with the action in the file menu.</string>
      </property>
     </widget>
    </item>

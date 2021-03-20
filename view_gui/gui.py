@@ -107,6 +107,7 @@ class Ui_GameOfLife(object):
         self.actionAbout.setObjectName("actionAbout")
         self.menuFile.addAction(self.actionLoad)
         self.menuFile.addAction(self.actionSave)
+        self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuit)
         self.menuHelp.addAction(self.actionRules)
         self.menuHelp.addAction(self.actionAbout)
