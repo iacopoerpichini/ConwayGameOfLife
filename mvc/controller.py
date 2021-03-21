@@ -36,7 +36,7 @@ class ControllerGol:
         self._model.setRunning(not self._model.isRunning())
         if self._model.isRunning():
             msec = 1 / self._model.getSpeed() * 1000
-            self._timer.setInterval(msec=msec)
+            self._timer.setInterval(msec)
             self._timer.start()
         else:
             self._timer.stop()
