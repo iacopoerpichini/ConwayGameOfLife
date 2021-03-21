@@ -40,6 +40,7 @@ My implementation of GoL application have the following features:
 
 ### Simulation
 
+![Alt Text](https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/simulation.gif)
 
 ### Directories Layout
 
