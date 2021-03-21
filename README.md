@@ -63,6 +63,8 @@ My implementation of GoL application have the following features:
 ### Requirements
 The project is developed with PyCharm and i found an interesting [guide](https://pythonpyqt.com/how-to-install-pyqt5-in-pycharm/) for integrate QTdesigner and PyUIC in the ide.
 
+The following vestion of libraries are used:
+
 | Software   | Version           |
 | -----------|-------------------|
 | **Python** | tested on v3.6    | 
