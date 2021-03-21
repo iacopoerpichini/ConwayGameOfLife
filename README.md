@@ -2,14 +2,19 @@
 
 ## Overview
 The Game of Life was invented in 1970 by the British mathematician John Horton Conway.
+
 This is the [original article](http://ddi.cs.uni-potsdam.de/HyFISCH/Produzieren/lis_projekt/proj_gamelife/ConwayScientificAmerican.htm) of Game of Life with the relative [community](https://www.conwaylife.com/). 
+
 The main focus on this implementation is on familiarizing with MVC pattern below.
 <img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/mvc.png" height="361" width="516">
 
 ### Game of Life rules 
-The game is played on a two-dimensional board implemented with a numpy array. Each grid location is either empty or populated by a single cell.
-A location’s neighbors are any cells in the surrounding eight adjacent locations. 
+The game is played on a two-dimensional board implemented with a numpy array.
+
+Each grid location is either empty or populated by a single cell. A location’s neighbors are any cells in the surrounding eight adjacent locations. 
+
 The simulation of starts from an initial state of populated locations and then progresses through time.
+
 The evolution of the board state is governed by a few simple rules:
 
   1. Each populated location with one or zero neighbors dies (from loneliness).
@@ -19,6 +24,7 @@ The evolution of the board state is governed by a few simple rules:
   5. All updates are performed simultaneously in parallel.
   
 This figure illustrates the rules for cell death, survival, and birth:
+
 <img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/rules.png" height="742" width="808">
 
 
