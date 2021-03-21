@@ -1,12 +1,10 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtCore import Qt
-from model import ModelGol
+from mvc.model import ModelGol
 
 
 class BoardGoL(QLabel):
-
     # Signal definition
     changeStateSignal = QtCore.pyqtSignal(object)
 
@@ -23,25 +21,22 @@ class BoardGoL(QLabel):
         """
         # take the grid from model and transorm it into a image
         grid = self._model.getGrid()
-
-        width = grid.shape[0]
-        height = grid.shape[1]
-        image = QImage(grid, width, height, width, QImage.Format_Indexed8)
-        qpixmap = QPixmap.fromImage(image)
+        width, height = grid.shape[0], grid.shape[1]
+        qpixmap = QPixmap.fromImage(QImage(grid, width, height, width, QImage.Format_Indexed8))
         # Scale the created QPixmap to fit the widget
-        self.setPixmap(qpixmap.scaled(self.width(), self.height(), Qt.KeepAspectRatio))
+        self.setPixmap(qpixmap.scaled(self.width(), self.height()))
 
     def mousePressEvent(self, event):
         """
         Mouse event on click in the GoL board
         """
         try:
-            if not self._model.isRunning():
-                ep = event.pos()
-                print('pos x:' + ep.x().__str__() + ' pos y: ' + ep.y().__str__())
+            if not self._model.isRunning():  # if the model is running i cant draw
+                click = event.pos()
+                print('pos x:' + click.x().__str__() + ' pos y: ' + click.y().__str__())
                 # left click fill cell or delete cell
                 if event.button() == QtCore.Qt.LeftButton:
-                    self.changeStateSignal.emit([ep.x(), ep.y()])
+                    self.changeStateSignal.emit([click.x(), click.y()])
         except Exception:
             print('Mouse press event exception')
             pass
@@ -51,9 +46,11 @@ class BoardGoL(QLabel):
         Left click pressed for draw cell
         """
         try:
-            ep = event.pos()
-            if event.buttons() == QtCore.Qt.LeftButton:
-                self.changeStateSignal.emit([ep.x(), ep.y()])
+            if not self._model.isRunning():  # if the model is running i cant draw
+                click = event.pos()
+                # hold left click for draw/delete cell
+                if event.buttons() == QtCore.Qt.LeftButton:
+                    self.changeStateSignal.emit([click.x(), click.y()])
         except Exception:
             print('Mouse move event exception')
             pass

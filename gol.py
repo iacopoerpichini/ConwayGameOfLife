@@ -1,8 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from controller import ControllerGol
-from model import ModelGol
-from view_gui.view import GuiGol
+from mvc.controller import ControllerGol
+from mvc.model import ModelGol
+from mvc.view import GuiGol
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

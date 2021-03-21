@@ -3,13 +3,13 @@ import os
 import numpy as np
 from PyQt5.QtWidgets import QMainWindow, QDialog, QApplication, QFileDialog
 
-from BoardGoL import BoardGoL
-from model import ModelGol
-from view_gui.about import Ui_About
-from view_gui.rules import Ui_Rules
-from view_gui.gui import Ui_GameOfLife
+from mvc.boardGol import BoardGoL
+from mvc.model import ModelGol
+from gui.about import Ui_About
+from gui.rules import Ui_Rules
+from gui.gui import Ui_GameOfLife
 
-PATTERN_FOLDER = os.path.join(os.path.dirname(os.path.abspath('__file__')), 'pattern')
+CURRENT_DIR = os.path.dirname(os.path.abspath('__file__'))
 
 class RulesDialog(QDialog):
     def __init__(self, **kwargs):
@@ -44,8 +44,7 @@ class GuiGol(QMainWindow):
         self.gui.actionRules.triggered.connect(self._rulesDialog.exec_)
         self.gui.actionQuit.triggered.connect(QApplication.exit)
 
-        # Create action for load and save       # not implemented yet
-        """ da capire come chiamare finestra esterna per salvare o caricare"""
+        # Create action for load and save
         self.gui.actionLoad.triggered.connect(self._load)
         self.gui.actionSave.triggered.connect(self._save)
 
@@ -70,9 +69,7 @@ class GuiGol(QMainWindow):
         print('load')
         self._model.clearGrid()
         try:
-            widgetLoad = QFileDialog.Options()
-            widgetLoad |= QFileDialog.DontUseNativeDialog
-            path = QFileDialog.getOpenFileName(caption="Load pattern", directory=PATTERN_FOLDER, options=widgetLoad)
+            path = QFileDialog.getOpenFileName(directory=CURRENT_DIR)
             if path[0] !='':
                 grid = np.loadtxt(path[0], dtype=np.uint8)
                 self._model.setGrid(grid)
@@ -87,9 +84,7 @@ class GuiGol(QMainWindow):
         print('save')
         grid = self._model.getGrid()
         try:
-            widgetSave = QFileDialog.Options()
-            widgetSave |= QFileDialog.DontUseNativeDialog
-            path = QFileDialog.getSaveFileName(caption="Choose name for save", directory=PATTERN_FOLDER, options=widgetSave)
+            path = QFileDialog.getSaveFileName(directory=CURRENT_DIR)
             if path[0] != '':
                 np.savetxt(path[0] + '.txt', grid)
         except Exception:

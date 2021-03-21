@@ -1,10 +1,9 @@
 from math import floor
-
 import numpy as np
 from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtCore
-from model import ModelGol
-from view_gui.view import GuiGol
+from mvc.model import ModelGol
+from mvc.view import GuiGol
 
 
 class ControllerGol:
@@ -18,6 +17,10 @@ class ControllerGol:
         self._model = model
         self._view = view
 
+        # timer for play pause action
+        self._timer = QtCore.QTimer()
+        self._timer.timeout.connect(self.step)
+
         # connect to the controller all the elements on the view
         self._view.buttonPlay(self.play)
         self._view.buttonSingleStep(self.step)
@@ -25,9 +28,6 @@ class ControllerGol:
         self._view.sliderSpeed(self.setSliderSpeed)
         self._view.board.changeStateSignal.connect(self.changeGrid)
 
-        # timer for play pause action
-        self._timer = QtCore.QTimer()
-        self._timer.timeout.connect(self.step)
 
     def play(self):
         """
@@ -36,7 +36,7 @@ class ControllerGol:
         self._model.setRunning(not self._model.isRunning())
         if self._model.isRunning():
             msec = 1 / self._model.getSpeed() * 1000
-            self._timer.setInterval(msec)
+            self._timer.setInterval(msec=msec)
             self._timer.start()
         else:
             self._timer.stop()
@@ -63,7 +63,7 @@ class ControllerGol:
         :return: # neighbours
         """
         grid = self._model.getGrid()
-        indexes = []
+        indexes = [] # contains the filter for the conv 3x3
         indexes.append([i - 1, j - 1])
         indexes.append([i, j - 1])
         indexes.append([i + 1, j - 1])
@@ -73,10 +73,10 @@ class ControllerGol:
         indexes.append([i, j + 1])
         indexes.append([i + 1, j + 1])
         indexes = self._checkIndexes(indexes, grid.shape[0], grid.shape[1])
-        newValue = 0
+        neighbours = 0
         for index in indexes:
-            newValue += grid[index[0], index[1]]
-        return floor(newValue / 255)
+            neighbours += grid[index[0], index[1]]
+        return floor(neighbours / 255) #255 is for the colour in the bitmap
 
     def _checkIndexes(self, indexes, maxRows, maxCols):
         """
@@ -117,19 +117,16 @@ class ControllerGol:
         # remove the padding of external widget
         # maxWidth = self._view.gui.graphicsView.frameGeometry().width() - self._view.gui.graphicsView.x()
         # maxHeight = self._view.gui.graphicsView.frameGeometry().height() - self._view.gui.graphicsView.y()
-        maxWidth = self._view.board.width()
-        maxHeight = self._view.board.height()
-
+        maxWidth, maxHeight = self._view.board.width(), self._view.board.height()
         if x <= maxWidth and y <= maxHeight:
             numberCellH, numberCellW = maxHeight/grid.shape[1], maxWidth/grid.shape[0]
-            # change the index of row and col for display the right figure
+            # change the index of row and col for display the right figure cause numpy array indexes
             col, row = floor(x/numberCellW), floor(y/numberCellH)
             if col >= 0 and row >= 0:
                 if grid[row, col] == 0:
                     grid[row, col] = 255 # white color
                 elif grid[row, col] == 255:
                     grid[row, col] = 0 # black color
-                # print(grid)
                 self._model.setGrid(grid)
 
 
