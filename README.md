@@ -19,7 +19,7 @@ The evolution of the board state is governed by a few simple rules:
   5. All updates are performed simultaneously in parallel.
   
 This figure illustrates the rules for cell death, survival, and birth:
-<img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/mvc.png" height="742" width="808">
+<img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/rules.png" height="742" width="808">
 
 
 
