@@ -1,9 +1,6 @@
 import numpy as np
 from PyQt5.QtCore import QObject, pyqtSignal
 
-# only initial param for dimension of the GoL board can be modified with methods in the model
-GRIDSIZE = 50
-
 # observable class see at lesson for observe value changed in model
 class Observable(QObject):
     value_changed = pyqtSignal(object)
@@ -23,12 +20,12 @@ class ModelGol(Observable):
     Represent the raw data for the evolution bord of GoL, the flag relative to the run action of the program and the
     state of speed slider
     """
-    def __init__(self):
+    def __init__(self, gridSize):
         super().__init__()
         # parameters
         self._speed = 15 # default 15 fps 1 min 30 max
         self._runnig = False
-        self._gridSize = GRIDSIZE
+        self._gridSize = gridSize
         self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
 
     def getSpeed(self):
@@ -54,12 +51,4 @@ class ModelGol(Observable):
 
     def clearGrid(self):
         self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
-
-    def getGridSize(self):
-        return self._gridSize
-
-    def setGridSize(self, size):
-        self._gridSize = size
-        self.notify()
-
 
