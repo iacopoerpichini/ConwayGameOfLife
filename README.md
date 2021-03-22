@@ -30,9 +30,9 @@ This figure illustrates the rules for cell death, survival, and birth:
 
 
 ### Features
-My implementation of GoL application have the following features:
+My implementation of Game of Life application have the following features:
   
-  1. A visual simulation displayed on a black board.
+  1. A visual simulation displayed on a square black board with fixed size 50x50px.
   2. Start/pause/clear/singleStep buttons that allowed users to run the simulation.
   3. Drawing/editing of state on the board with the left click of the mouse. If users click on the board set to alive/death a single cell and is possible to hold the click and drag the mouse for drawing.
   4. A slider that allow to set the speed of the simulation when is not running.
@@ -74,7 +74,20 @@ The following version of libraries are used:
 
 ### Usage
 After installation of requirements [download](https://github.com/iacopoerpichini/ConowayGameOfLife.git) the project and run it in a terminal.
+
 ```sh
 $ cd ConowayGameOfLife
 $ python gol.py
 ```
+
+Is possible to start the simulation via command line and chose a grid dimension, the grid is 50x50px by default.
+
+Note: the grid is always a square grid. 
+
+Example: (-s is gridSize variable in gol.py)
+
+```sh
+$ python gol.py -s 20
+```
+
+
