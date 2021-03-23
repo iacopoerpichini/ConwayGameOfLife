@@ -90,5 +90,5 @@ Example: (-s is gridSize variable in gol.py)
 ```sh
 $ python gol.py -s 20
 ```
-
+This start a simulation with a grid 20x20 px, if you load a saved pattern in other dimension the grid size change according to the pattern loaded.
 
