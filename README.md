@@ -25,7 +25,7 @@ The evolution of the board state is governed by a few simple rules:
   
 This figure illustrates the rules for cell death, survival, and birth:
 
-<img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/rules.png" height="412" width="516">
+<img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/rules.PNG" height="300" width="1200">
 
 
 
