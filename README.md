@@ -6,7 +6,8 @@ The Game of Life was invented in 1970 by the British mathematician John Horton C
 This is the [original article](http://ddi.cs.uni-potsdam.de/HyFISCH/Produzieren/lis_projekt/proj_gamelife/ConwayScientificAmerican.htm) of Game of Life with the relative [community](https://www.conwaylife.com/). 
 
 The main focus on this implementation is on familiarizing with MVC pattern below.
-<img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/mvc.png" height="361" width="516">
+
+<img src="https://github.com/iacopoerpichini/ConowayGameOfLife/blob/master/img/mvc.png">
 
 ### Game of Life rules 
 The game is played on a two-dimensional board implemented with a numpy array.
