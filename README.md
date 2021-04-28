@@ -1,5 +1,7 @@
 # Conoway's Game of Life (MVC implementation)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 ## Overview
 The Game of Life was invented in 1970 by the British mathematician John Horton Conway.
 
