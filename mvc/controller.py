@@ -37,11 +37,11 @@ class ControllerGol:
         """
         Chosee the displayed grid if user change radio button the grid are resetted
         """
-        print(self._model.getPalette())
         if self._model.getPalette() == 'bw':
             self._model.setPalette('age')
         elif self._model.getPalette() == 'age':
             self._model.setPalette('bw')
+        print(self._model.getPalette())
         self.reset()
 
     def play(self):
