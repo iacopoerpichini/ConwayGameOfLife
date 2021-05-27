@@ -27,6 +27,8 @@ class ModelGol(Observable):
         self._runnig = False
         self._gridSize = gridSize
         self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
+        self._palette = 'bw'
+
 
     def getSpeed(self):
         return self._speed
@@ -49,6 +51,14 @@ class ModelGol(Observable):
         self._grid = grid
         self.notify()
 
+    def getPalette(self):
+        return self._palette
+
+    def setPalette(self, palette):
+        self._palette = palette
+        self.notify()
+
     def clearGrid(self):
         self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
+
 

@@ -7,7 +7,9 @@ from mvc.boardGol import BoardGoL
 from mvc.model import ModelGol
 from gui.about import Ui_About
 from gui.rules import Ui_Rules
-from gui.gui import Ui_GameOfLife
+
+#from gui.v1.gui import Ui_GameOfLife
+from gui.v2.guiV2 import Ui_GameOfLife
 
 CURRENT_DIR = os.path.dirname(os.path.abspath('__file__'))
 
@@ -25,10 +27,6 @@ class AboutDialog(QDialog):
         # Set up the user interface from Designer.
         self.guiAbout = Ui_About()
         self.guiAbout.setupUi(self)
-        # image = QtGui.QImage("../img/mvc.png")
-        # qpixmap = QtGui.QPixmap.fromImage(image)
-        # print(image)
-        # self.guiAbout.img2.setPixmap(qpixmap)
 
 
 class GuiGol(QMainWindow):
@@ -128,3 +126,15 @@ class GuiGol(QMainWindow):
         slot of slider speed
         """
         self.gui.sliderSpeed.valueChanged.connect(slot)
+
+    def radioBW(self, slot):
+        """
+        slot of radio button black white
+        """
+        self.gui.radioButton1.toggled.connect(slot)
+
+    def radioAge(self, slot):
+        """
+        slot of radio button for display cell age
+        """
+        self.gui.radioButton2.toggled.connect(slot)

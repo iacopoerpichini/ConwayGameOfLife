@@ -28,6 +28,21 @@ class ControllerGol:
         self._view.sliderSpeed(self.setSliderSpeed)
         self._view.board.changeStateSignal.connect(self.changeGrid)
 
+        # connect the radio button for display cell age
+        self._view.radioAge(self.btnState)
+        print(self._model.getPalette())
+
+
+    def btnState(self):
+        """
+        Chosee the displayed grid if user change radio button the grid are resetted
+        """
+        print(self._model.getPalette())
+        if self._model.getPalette() == 'bw':
+            self._model.setPalette('age')
+        elif self._model.getPalette() == 'age':
+            self._model.setPalette('bw')
+        self.reset()
 
     def play(self):
         """
@@ -50,11 +65,19 @@ class ControllerGol:
         for i in range(grid.shape[0]):
             for j in range(grid.shape[1]):
                 if self._neighbors(i, j) == 3:
-                    newGrid[i, j] = 255 # born a new cell
+                    if grid[i, j] == 0:
+                        newGrid[i, j] = 255 # born a new cell
+                    else:
+                        newGrid[i, j] = max(grid[i, j] - 1, 100)
                 elif self._neighbors(i, j) >= 4 or self._neighbors(i, j) <= 1:
                     newGrid[i, j] = 0 # die for over/under population
                 elif self._neighbors(i, j) == 2:
-                    newGrid[i, j] = grid[i, j]
+                    if self._model.getPalette() == 'bw':
+                        newGrid[i, j] = grid[i, j]
+                    elif self._model.getPalette() == 'age':
+                        if grid[i, j] > 0:
+                            newGrid[i, j] = max(grid[i, j] - 1, 100)
+
         self._model.setGrid(newGrid)
 
     def _neighbors(self, i, j):
@@ -75,8 +98,9 @@ class ControllerGol:
         indexes = self._checkIndexes(indexes, grid.shape[0], grid.shape[1])
         neighbours = 0
         for index in indexes:
-            neighbours += grid[index[0], index[1]]
-        return floor(neighbours / 255) #255 is for the colour in the bitmap
+            if grid[index[0], index[1]] > 0:
+                neighbours += 1
+        return neighbours
 
     def _checkIndexes(self, indexes, maxRows, maxCols):
         """
@@ -97,8 +121,6 @@ class ControllerGol:
         if self._model.isRunning():
             self._model.setRunning(False)
             self._timer.stop()
-
-        # print(self._model.getGrid()) ok
         self._view.board.updateGrid()
 
 
@@ -115,8 +137,6 @@ class ControllerGol:
         grid = self._model.getGrid()
         x, y = coord[0], coord[1]
         # remove the padding of external widget
-        # maxWidth = self._view.gui.graphicsView.frameGeometry().width() - self._view.gui.graphicsView.x()
-        # maxHeight = self._view.gui.graphicsView.frameGeometry().height() - self._view.gui.graphicsView.y()
         maxWidth, maxHeight = self._view.board.width(), self._view.board.height()
         if x <= maxWidth and y <= maxHeight:
             numberCellH, numberCellW = maxHeight/grid.shape[1], maxWidth/grid.shape[0]
@@ -124,9 +144,15 @@ class ControllerGol:
             col, row = floor(x/numberCellW), floor(y/numberCellH)
             if col >= 0 and row >= 0:
                 if grid[row, col] == 0:
-                    grid[row, col] = 255 # white color
-                elif grid[row, col] == 255:
-                    grid[row, col] = 0 # black color
+                    if(self._model.getPalette() == 'bw'):
+                        grid[row, col] = 255 # white color
+                    elif(self._model.getPalette() == 'age'):
+                        grid[row, col] = 255  # white color
+                elif (grid[row, col] > 0 and grid[row, col] <= 255):
+                    if (self._model.getPalette() == 'bw'):
+                        grid[row, col] = 0 # black color
+                    elif(self._model.getPalette() == 'age'):
+                        grid[row, col] = max(grid[row, col] - 1, 100)# white color
                 self._model.setGrid(grid)
 
 

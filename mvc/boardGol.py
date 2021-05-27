@@ -1,8 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtGui import QImage, QPixmap, qRgb
 from PyQt5.QtWidgets import QLabel
 from mvc.model import ModelGol
-
 
 class BoardGoL(QLabel):
     # Signal definition
@@ -22,7 +21,13 @@ class BoardGoL(QLabel):
         # take the grid from model and transorm it into a image
         grid = self._model.getGrid()
         width, height = grid.shape[0], grid.shape[1]
-        qpixmap = QPixmap.fromImage(QImage(grid, width, height, width, QImage.Format_Indexed8))
+        qimage = QImage(grid, width, height, width, QImage.Format_Indexed8)
+        qpixmap = QPixmap.fromImage(qimage)
+        if self._model.getPalette() == 'bw':
+            qpixmap = QPixmap.fromImage(qimage)
+        elif self._model.getPalette() == 'age':
+            qimage.setColorTable(self.paletteCellAge())
+            qpixmap = QPixmap.fromImage(qimage)
         # Scale the created QPixmap to fit the widget
         self.setPixmap(qpixmap.scaled(self.width(), self.height()))
 
@@ -64,3 +69,14 @@ class BoardGoL(QLabel):
         except Exception:
             print('Failed initial resize')
             pass
+
+    def paletteCellAge(self):
+        """
+        return the color palette for cell age representation
+        :return:
+        """
+        black = qRgb(0, 0, 0)
+        # From light blue (newborn cells) to red (ancient cells)
+        palette = [black] + [qRgb(255, 255, 255 - i * 2) for i in range(128)] + \
+                          [qRgb(i * 2, 255 - i * 2, 255) for i in range(127)]
+        return palette

@@ -40,6 +40,7 @@ My implementation of Game of Life application have the following features:
   3. Drawing/editing of state on the board with the left click of the mouse. If users click on the board set to alive/death a single cell and is possible to hold the click and drag the mouse for drawing.
   4. A slider that allow to set the speed of the simulation when is not running.
   5. A menu bar with load/save function for board.
+  6. Radio button for select a black and white mode or a palette of colours to show the age of the cells
 
 ### Simulation
 
@@ -49,7 +50,9 @@ My implementation of Game of Life application have the following features:
 
 ```bash
 ├── gui                 # Contain the user interface generated with QtDesigner
-│   ├── ...             # and python code generated with PyUiC (main window and two dialog)  
+│   ├── v1              # and python code generated with PyUiC (main window and two dialog)  
+│   ├── v2            
+│   ├── ... 
 ├── img                 # Some image for readme
 │   ├── ... 
 ├── mvc                 # The core of the project that uses mvc
