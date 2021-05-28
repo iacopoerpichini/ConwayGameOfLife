@@ -65,7 +65,7 @@ class ControllerGol:
         for i in range(grid.shape[0]):
             for j in range(grid.shape[1]):
                 if self._neighbors(i, j) == 3:
-                    if grid[i, j] == 0:
+                    if grid[i, j] == 0: # this is for the color palette
                         newGrid[i, j] = 255 # born a new cell
                     else:
                         newGrid[i, j] = max(grid[i, j] - 1, 1)

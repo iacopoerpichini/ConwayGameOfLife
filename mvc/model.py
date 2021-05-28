@@ -29,7 +29,9 @@ class ModelGol(Observable):
         self._grid = np.zeros((self._gridSize,self._gridSize), dtype=np.uint8) # square grid
         self._palette = 'bw'
 
-
+    """
+        getter and setter method of data model variables
+    """
     def getSpeed(self):
         return self._speed
 
