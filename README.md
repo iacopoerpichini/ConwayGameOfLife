@@ -1,4 +1,4 @@
-# Conoway's Game of Life (MVC implementation)
+# Conway's Game of Life (MVC implementation)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
