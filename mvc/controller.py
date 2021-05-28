@@ -29,11 +29,11 @@ class ControllerGol:
         self._view.board.changeStateSignal.connect(self.changeGrid)
 
         # connect the radio button for display cell age
-        self._view.radioAge(self.btnState)
+        self._view.radioAge(self.radioStatePalette)
         print(self._model.getPalette())
 
 
-    def btnState(self):
+    def radioStatePalette(self):
         """
         Chosee the displayed grid if user change radio button the grid are resetted
         """
@@ -68,7 +68,7 @@ class ControllerGol:
                     if grid[i, j] == 0:
                         newGrid[i, j] = 255 # born a new cell
                     else:
-                        newGrid[i, j] = max(grid[i, j] - 1, 100)
+                        newGrid[i, j] = max(grid[i, j] - 1, 1)
                 elif self._neighbors(i, j) >= 4 or self._neighbors(i, j) <= 1:
                     newGrid[i, j] = 0 # die for over/under population
                 elif self._neighbors(i, j) == 2:
@@ -76,7 +76,7 @@ class ControllerGol:
                         newGrid[i, j] = grid[i, j]
                     elif self._model.getPalette() == 'age':
                         if grid[i, j] > 0:
-                            newGrid[i, j] = max(grid[i, j] - 1, 100)
+                            newGrid[i, j] = max(grid[i, j] - 1, 1)
 
         self._model.setGrid(newGrid)
 
@@ -152,7 +152,7 @@ class ControllerGol:
                     if (self._model.getPalette() == 'bw'):
                         grid[row, col] = 0 # black color
                     elif(self._model.getPalette() == 'age'):
-                        grid[row, col] = max(grid[row, col] - 1, 100)# white color
+                        grid[row, col] = max(grid[row, col] - 1, 1)# white color
                 self._model.setGrid(grid)
 
 

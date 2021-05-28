@@ -26,7 +26,7 @@ class BoardGoL(QLabel):
         if self._model.getPalette() == 'bw':
             qpixmap = QPixmap.fromImage(qimage)
         elif self._model.getPalette() == 'age':
-            qimage.setColorTable(self.paletteCellAge())
+            qimage.setColorTable(self._paletteCellAge())
             qpixmap = QPixmap.fromImage(qimage)
         # Scale the created QPixmap to fit the widget
         self.setPixmap(qpixmap.scaled(self.width(), self.height()))
@@ -70,13 +70,13 @@ class BoardGoL(QLabel):
             print('Failed initial resize')
             pass
 
-    def paletteCellAge(self):
+    def _paletteCellAge(self):
         """
         return the color palette for cell age representation
         :return:
         """
-        black = qRgb(0, 0, 0)
-        # From light blue (newborn cells) to red (ancient cells)
-        palette = [black] + [qRgb(255, 255, 255 - i * 2) for i in range(128)] + \
-                          [qRgb(i * 2, 255 - i * 2, 255) for i in range(127)]
+        # set background to black
+        palette = [qRgb(0, 0, 0)]
+        # from green to red trough yellow
+        palette += [qRgb(255, i * 2, 0) for i in range(128)] + [qRgb(255 - i * 2, 255, 0) for i in range(127)]
         return palette
